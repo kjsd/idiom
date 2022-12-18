@@ -22,7 +22,7 @@ async function get_idioms() {
   const body = await response.text();
   const root = parse(body);
   const idioms =  root.querySelectorAll('.in-side-ttl-b').slice(0, 10).map(el => {
-    const result = /([^（）]+)（(.+)）/.exec(el.text);
+    const result = /([^_（）]+)（(.+)）/.exec(el.text);
     return {
       kanji: result[1],
       kana: result[2]
