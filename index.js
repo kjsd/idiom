@@ -34,10 +34,11 @@ async function get_idioms(num) {
     
     els.forEach(el => {
       const result = /^([^【]+)【(.+)】/.exec(el.text);
+      const desc = /^([^▽]+)▽.*/.exec(el.nextElementSibling.text);
       idioms.push({
         kanji: result[2],
         kana: result[1],
-        desc: el.nextElementSibling.text
+        desc: desc ? desc[1]: el.nextElementSibling.text
       });
     });
     
