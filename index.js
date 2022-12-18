@@ -21,12 +21,22 @@ async function get_idioms() {
   const response = await fetch('https://dictionary.goo.ne.jp/idiom/');
   const body = await response.text();
   const root = parse(body);
-  return root.querySelectorAll('.in-side-ttl-b').map(el => {
+  const idioms =  root.querySelectorAll('.in-side-ttl-b').map(el => {
     const result = /([^（）]+)（(.+)）/.exec(el.text);
     return {
       kanji: result[1],
       kana: result[2]
     };
   });
+  const descs = await Promise.all(idioms.map(v => get_description(v.kanji)));
+  return idioms.map((v,i) => Object.assign(v, { desc: descs[i]}));
+
+}
+async function get_description(idiom) {
+  const uri = `https://dictionary.goo.ne.jp/word/${idiom}/`;
+  const response = await fetch(encodeURI(uri));
+  const body = await response.text();
+  const root = parse(body);
+  return root.querySelector('.meaning_area').text;
 }
 
