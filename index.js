@@ -24,7 +24,7 @@ async function get_idioms(num) {
   let n = 0;
   const idioms = [];
   while(n < num) {
-    const next = (num - n > 10) ? 10: num - n;
+    const next = (num - n > 5) ? 5: num - n;
     const i = random(0, firsts_.length);
     const uri = `https://dictionary.goo.ne.jp/idiom/index/${firsts_.charAt(i)}`;
     const response = await fetch(encodeURI(uri));
