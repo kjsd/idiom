@@ -27,7 +27,7 @@ async function get_popular_idioms(num) {
   const root = parse(body);
   const els = root.querySelectorAll('.title,.in-side-ttl-b');
   const idioms = random_sort(els).slice(0, num).map(el => {
-    const result = /^([^（]+)（(.+)）/.exec(el.text);
+ const result = /([^_（）]+).*（(.+)）/.exec(el.text);
     return {
       kanji: result[1],
       kana: result[2]
